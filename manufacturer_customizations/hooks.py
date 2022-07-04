@@ -104,26 +104,11 @@ fixtures = ["Workflow State", "Client Script", "Role",
                 ]
             },
             {
-                "dt": "Notification", 
-                "filters": [
-                    "is_standard != 1"]
-            },
-            {
                 "dt": 'DocType',
                 "filters": [
                     ["name", "in",
                      [
                              "Spares Item"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Workflow',
-                "filters": [
-                    ["name", "in",
-                     [
-                        "Work Order workflow"
                      ]
                      ]
                 ]
@@ -159,7 +144,8 @@ fixtures = ["Workflow State", "Client Script", "Role",
                         "Work Order-week_number",
                         "Work Order-year",
                         "Work Order-updated_series",
-                        "Item-manufacturing_uom"
+                        "Item-manufacturing_uom",
+                        "Work Order Item-quality_inspection"
                      ]
                      ]
                 ]
