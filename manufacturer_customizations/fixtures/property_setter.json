@@ -1,0 +1,19 @@
+[
+ {
+  "default_value": null,
+  "doc_type": "Quality Inspection",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "reference_type",
+  "modified": "2022-06-24 12:53:51.366888",
+  "name": "Quality Inspection-reference_type-options",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "options",
+  "property_type": "Select",
+  "row_name": null,
+  "value": "\nPurchase Receipt\nPurchase Invoice\nDelivery Note\nSales Invoice\nStock Entry\nJob Card\nWork Order"
+ }
+]

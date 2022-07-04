@@ -9,19 +9,20 @@ app_color = "grey"
 app_email = "abc@gmail.com"
 app_license = "MIT"
 
+
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/manufacturer_customizations/css/manufacturer_customizations.css"
-# app_include_js = "/assets/manufacturer_customizations/js/manufacturer_customizations.js"
+# app_include_css = "/assets/pcprocess_customizations/css/pcprocess_customizations.css"
+# app_include_js = "/assets/pcprocess_customizations/js/pcprocess_customizations.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/manufacturer_customizations/css/manufacturer_customizations.css"
-# web_include_js = "/assets/manufacturer_customizations/js/manufacturer_customizations.js"
+# web_include_css = "/assets/pcprocess_customizations/css/pcprocess_customizations.css"
+# web_include_js = "/assets/pcprocess_customizations/js/pcprocess_customizations.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "manufacturer_customizations/public/scss/website"
+# website_theme_scss = "pcprocess_customizations/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -32,9 +33,15 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+    "Job Card": "manufacturer_customizations/doctype/job_card/job_card_list.js"
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
+doctype_js = {
+    "Job Card":"manufacturer_customizations/doctype/job_card/job_card.js",
+    "Work Order":"manufacturer_customizations/doctype/work_order/work_order.js"
+}
 
 # Home Pages
 # ----------
@@ -56,20 +63,11 @@ app_license = "MIT"
 # Installation
 # ------------
 
-# before_install = "manufacturer_customizations.install.before_install"
-# after_install = "manufacturer_customizations.install.after_install"
-
-# Uninstallation
-# ------------
-
-# before_uninstall = "manufacturer_customizations.uninstall.before_uninstall"
-# after_uninstall = "manufacturer_customizations.uninstall.after_uninstall"
-
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "manufacturer_customizations.notifications.get_notification_config"
+# notification_config = "pcprocess_customizations.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -86,62 +84,219 @@ app_license = "MIT"
 # DocType Class
 # ---------------
 # Override standard doctype classes
-
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+fixtures = ["Workflow State", "Client Script", "Role",
+            {
+                "dt": 'Email Template',
+                "filters": [
+                    ["name", "in",
+                     [
+                             "SI notification for overdue",
+                             "Shelf life in days items notification",
+                             "Docket and Courier Details of DN",
+                             "Lead Auto Intro Email Template",
+                             "Final follow up for Quotation",
+                             "Quotation Follow up – 2",
+                             "Quotation Follow up – 1",
+                             "Purchase Order Follow up Template",
+                             "Purchase Order final due date notification"
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": "Notification", 
+                "filters": [
+                    "is_standard != 1"]
+            },
+            {
+                "dt": 'DocType',
+                "filters": [
+                    ["name", "in",
+                     [
+                             "Spares Item"
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": 'Workflow',
+                "filters": [
+                    ["name", "in",
+                     [
+                        "Work Order workflow"
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": 'Custom Field',
+                "filters": [
+                    ["name", "in",
+                     [
+                        "Job Card Time Log-shortfall_qty",
+                        "Job Card Time Log-accepted_qty",
+                        "BOM-pcbs_per_panel",
+                        "BOM-panel_breadth",
+                        "BOM-panel_length",
+                        "BOM Item-column_break_10",
+                        "BOM Item-tg",
+                        "BOM Item-make",
+                        "BOM Item-copper_thickness",
+                        "BOM Item-dielectric_thickness",
+                        "BOM Item-section_break_7",
+                        "Work Order-workflow_state",
+                        "Job Card Time Log-rejected_qty",
+                        "Job Card Time Log-excess_qty",
+                        "Job Card Time Log-order_qty",
+                        "Job Card Time Log-launch_qty",
+                        "Sales Order-lead_date_and_time",
+                        "Work Order Item-length",
+                        "Work Order Item-breadth",
+                        "Work Order Item-product",
+                        "Work Order-batch_code",
+                        "BOM-mpc_dpc_no",
+                        "Work Order-layer",
+                        "Work Order-week_number",
+                        "Work Order-year",
+                        "Work Order-updated_series",
+                        "Item-manufacturing_uom"
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": 'Report',
+                "filters": [
+                    ["name", "in",
+                     [
+                             "Shelf Life in Items",
+                             "Lost Report",
+                             "Non Approval Sales Invoices",
+                         "Non Approval Sales Orders",
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": 'Property Setter',
+                "filters": [
+                    ["name", "in",
+                     [
+                         "Job Card Time Log-employee-in_list_view",
+                         "Work Order-skip_transfer-default",
+                         "Work Order-source_warehouse-default",
+                         "Work Order-naming_series-options",
+                         "Work Order-sales_order-reqd",
+                         "Work Order-naming_series-default",
+			 "Quality Inspection-reference_type-options"
+                     ]
+                     ]
+                ]
+            },
+            {
+                "dt": 'Workspace',
+                "filters": [
+                    ["name", "in",
+                     [
+                             "Selling",
+                             "Stock",
+                     ]
+                     ]
+                ]
+            },
+            ]
+override_doctype_class = {
+    "Work Order": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.CustomWorkOrder",
+    "BOM": "manufacturer_customizations.manufacturer_customizations.doctype.bom.bom.CustomBOM",
+}
 
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+   # "Quotation": {
+    #    "on_submit": ["pcprocess_customizations.schedulers.send_notification_for_quotation"]
+    #},
+    "Work Order": {
+        "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
+    },
+    #"Lead":{
+     #   "validate":["pcprocess_customizations.schedulers.send_notification_for_lead"]
+    #},
+    "Job Card": {
+        "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate']
+    },
+    "Quality Inspection": {
+	"on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.quality_inspection.quality_inspection.on_submit']
+    }
+    # 	"*": {
+    # 		"on_update": "method",
+    # 		"on_cancel": "method",
+    # 		"on_trash": "method"
+    #	}
+}
 
 # Scheduled Tasks
 # ---------------
+scheduler_events = {
+   # "cron": {
+      #      "00 9 * * *": [
+       #         "pcprocess_customizations.schedulers.send_quotation_followup_mails",
+        #        "pcprocess_customizations.schedulers.send_purchase_order_first_notification",
+         #       "pcprocess_customizations.schedulers.send_purchase_order_final_notification"
+          #  ]
+#        },
 
+    "daily": [
+        "manufacturer_customizations.schedulers.send_notification_for_shelf_life_in_days_items",
+        "manufacturer_customizations.schedulers.send_notification_for_asset_maintenance",
+        "manufacturer_customizations.schedulers.send_docket_and_courier_details_of_DN"
+    ],
+    "weekly": [
+		"manufacturer_customizations.schedulers.send_notification_for_SI",
+    ]
+}
 # scheduler_events = {
 # 	"all": [
-# 		"manufacturer_customizations.tasks.all"
+# 		"pcprocess_customizations.tasks.all"
 # 	],
 # 	"daily": [
-# 		"manufacturer_customizations.tasks.daily"
+# 		"pcprocess_customizations.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"manufacturer_customizations.tasks.hourly"
+# 		"pcprocess_customizations.tasks.hourly"
 # 	],
 # 	"weekly": [
-# 		"manufacturer_customizations.tasks.weekly"
+# 		"pcprocess_customizations.tasks.weekly"
 # 	]
 # 	"monthly": [
-# 		"manufacturer_customizations.tasks.monthly"
+# 		"pcprocess_customizations.tasks.monthly"
 # 	]
 # }
 
 # Testing
 # -------
 
-# before_tests = "manufacturer_customizations.install.before_tests"
+# before_tests = "pcprocess_customizations.install.before_tests"
 
 # Overriding Methods
 # ------------------------------
-#
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "manufacturer_customizations.event.get_events"
-# }
-#
+#     
+
+override_whitelisted_methods = {
+    "erpnext.crm.doctype.lead.lead.make_opportunity":"manufacturer_customizations.manufacturer_customizations.doctype.lead.lead.make_opportunity",
+    "erpnext.manufacturing.doctype.work_order.work_order.make_stock_entry": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.make_stock_entry",
+    }
+
+
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-# 	"Task": "manufacturer_customizations.task.get_dashboard_data"
-# }
+
+override_doctype_dashboards = {
+	"Job Card": "manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card_dashboard.get_data"
+}
 
 # exempt linked doctypes from being automatically cancelled
 #
@@ -152,37 +307,29 @@ app_license = "MIT"
 # --------------------
 
 user_data_fields = [
-	{
-		"doctype": "{doctype_1}",
-		"filter_by": "{filter_by}",
-		"redact_fields": ["{field_1}", "{field_2}"],
-		"partial": 1,
-	},
-	{
-		"doctype": "{doctype_2}",
-		"filter_by": "{filter_by}",
-		"partial": 1,
-	},
-	{
-		"doctype": "{doctype_3}",
-		"strict": False,
-	},
-	{
-		"doctype": "{doctype_4}"
-	}
+    {
+        "doctype": "{doctype_1}",
+        "filter_by": "{filter_by}",
+        "redact_fields": ["{field_1}", "{field_2}"],
+        "partial": 1,
+    },
+    {
+        "doctype": "{doctype_2}",
+        "filter_by": "{filter_by}",
+        "partial": 1,
+    },
+    {
+        "doctype": "{doctype_3}",
+        "strict": False,
+    },
+    {
+        "doctype": "{doctype_4}"
+    }
 ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-# 	"manufacturer_customizations.auth.validate"
+# 	"pcprocess_customizations.auth.validate"
 # ]
-
-# Translation
-# --------------------------------
-
-# Make link fields search translated document names for these DocTypes
-# Recommended only for DocTypes which have limited documents with untranslated names
-# For example: Role, Gender, etc.
-# translated_search_doctypes = []

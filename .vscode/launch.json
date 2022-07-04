@@ -1,0 +1,9 @@
+{
+
+    "version": "0.2.0", 
+    "configurations": [
+        
+        
+         { "name": "Python: Current File", 
+    "type": "python", 
+    "request": "launch", "program": "${file}", "console": "integratedTerminal" }, { "name": "Bench", "type": "python", "request": "launch", "program": "${workspaceFolder}/frappe/frappe/utils/bench_helper.py", "args": [ "frappe", "serve", "--port", "8000", "--noreload", "--nothreading" ], "pythonPath": "${workspaceFolder}/../env/bin/python", "cwd": "${workspaceFolder}/../sites", "env": { "DEV_SERVER": "1" }, "use_reloader":true, "threaded":true } ]}
