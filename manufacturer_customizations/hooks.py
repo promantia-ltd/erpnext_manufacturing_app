@@ -84,7 +84,22 @@ doctype_js = {
 # DocType Class
 # ---------------
 # Override standard doctype classes
-fixtures = ["Workflow State", "Client Script", "Role",
+fixtures = ["Workflow State", "Role",
+            {
+                "dt": 'Client Script',
+                "filters": [
+                    ["name", "in",
+                    [
+                        "Work Order-Form",
+                        "Quality Inspection-Form",
+                        "Job Card-Form",
+                        "BOM-Form"
+
+                    ]
+                    ]
+
+                ]
+            },
             {
                 "dt": 'Email Template',
                 "filters": [
