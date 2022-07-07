@@ -81,3 +81,50 @@ def make_stock_entry(work_order_id, purpose, qty=None):
     stock_entry.get_items()
     stock_entry.set_serial_no_batch_for_finished_good()
     return stock_entry.as_dict()
+
+
+
+# def set_naming_series(doc,method):
+#     year,year_start_date = frappe.db.get_value("Fiscal Year",{"disabled":0,"year_start_date":["<=",frappe.utils.getdate()],"year_end_date":[">=",frappe.utils.getdate()]},["year","year_start_date"])
+#     no_of_layers = frappe.db.get_value("PCB Part No Master",{"pcb_part_no":doc.production_item},"no_of_layers")
+#     schedule_date = frappe.db.get_value("Sales Order Item",{'parent':doc.sales_order,'item_code':doc.production_item},"delivery_date")
+#     if no_of_layers!=None:
+#         if int(no_of_layers)>=4:
+#             doc.layer = 'M'
+#         else:
+#             doc.layer = 'D'
+
+#     doc.week_number = schedule_date.strftime("%U")
+#     doc.year = str(year)
+
+# @frappe.whitelist()
+# def set_name(doc):  
+#     doc = json.loads(doc) 
+#     name = doc['name'].strip('WO-')
+#     name = doc['layer']+name
+#     for row in frappe.db.get_list('Work Order Item',{'parenttype':'Work Order','parent':doc['name']},'name'):
+#         frappe.db.set_value('Work Order Item', row.name,{'parent':name})
+#     for row_operation in frappe.db.get_list('Work Order Operation',{'parenttype':'Work Order','parent':doc['name']},'name'):
+#         frappe.db.set_value('Work Order Operation', row_operation.name,{'parent':name})
+#     frappe.db.set_value('Work Order', doc['name'],{ 'name': name,'updated_series':1})
+    
+#     return name
+
+@frappe.whitelist()
+def update_name(doc_name):
+    layer = frappe.db.get_value('Work Order',{'name':doc_name},'layer')
+    out = []
+    name = doc_name.strip('WO-')
+    name = layer+name
+    for row in frappe.db.get_list('Work Order Item',{'parenttype':'Work Order','parent':doc_name},'name'):
+        frappe.db.set_value('Work Order Item', row.name,{'parent':name})
+    for row_operation in frappe.db.get_list('Work Order Operation',{'parenttype':'Work Order','parent':doc_name},'name'):
+        frappe.db.set_value('Work Order Operation', row_operation.name,{'parent':name})
+    frappe.db.set_value('Work Order', doc_name,{ 'name': name,'updated_series':1})
+    out.append(name)
+    return out
+
+@frappe.whitelist()
+def update_naming_series_current_value(series,current_value):
+    frappe.db.sql("update `tabSeries` set current = %s where name =%s",(int(current_value), series))
+    return 'Success'

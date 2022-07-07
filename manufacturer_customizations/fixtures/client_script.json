@@ -17,12 +17,12 @@
   "doctype": "Client Script",
   "dt": "Work Order",
   "enabled": 1,
-  "modified": "2022-07-05 15:07:45.353852",
+  "modified": "2022-07-07 12:05:40.271949",
   "name": "Work Order-Form",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('Work Order Item', {\n    length: function(frm,cdt,cdn){\n        var d = locals[cdt][cdn];\n        d.product = d.length*d.breadth\n        refresh_field(\"required_items\");\n        \n    },\n    \n    breadth: function(frm,cdt,cdn){\n        var d = locals[cdt][cdn];\n        d.product = d.length*d.breadth\n        refresh_field(\"required_items\");\n        \n    }\n})\n\nfrappe.ui.form.on('Work Order', {\n\trefresh(frm) {\n\t    \n\t    if(frm.doc.status==\"Not Started\")\n// \t\tfrm.remove_custom_button('Finish');\n\t\t\n\t\tfrm.add_custom_button(__('Quality Inspection'), function(){\n\t\t    frappe.new_doc('Quality Inspection',true)\n\t\t    frappe.route_options = {\n                reference_doctype: \"Quality Inspection\",\n                reference_type: \"Work Order\",\n                reference_name: frm.doc.name,\n                item_code: frm.doc.production_item\n            }\n            frappe.db.get_list('Quality Inspection',\n    filters={\n        'status': 'Submitted'\n    },\n    fields=['name', 'Quality Inspection.reference_type','Quality Inspection.reference_name'],\n    order_by='date desc',\n    start=10,\n    page_length=20,\n    as_list=True\n)\n        \n            // if(frm.doc.status==\"Submitted\")\n            // frm.enable_save();\n\t\t    frappe.msgprint(frm.doc.QualityInspection);\n\t\t})\n\t\t\n}\n})\n\n",
+  "script": "frappe.ui.form.on('Work Order Item', {\n    length: function(frm,cdt,cdn){\n        var d = locals[cdt][cdn];\n        d.product = d.length*d.breadth\n        refresh_field(\"required_items\");\n        \n    },\n    \n    breadth: function(frm,cdt,cdn){\n        var d = locals[cdt][cdn];\n        d.product = d.length*d.breadth\n        refresh_field(\"required_items\");\n        \n    }\n})\n\nfrappe.ui.form.on('Work Order', {\n\trefresh(frm) {\n\t   // if(frm.doc.docstatus==0){\n\t        if(frm.doc.status==\"Not Started\")\n\t        frappe.db.get_value('BOM', frm.doc.bom_no, 'inspection_required',(r) => {\n\t            console.log(r.inspection_required,'inspection_required--------------')\n\t            if(r.inspection_required==1){\n\t                frm.add_custom_button(__('Quality Inspection'), function(){\n\t                    frappe.new_doc('Quality Inspection',true)\n\t                    frappe.route_options = {\n\t                        reference_doctype: \"Quality Inspection\",\n\t                        reference_type: \"Work Order\",\n\t                        reference_name: frm.doc.name,\n\t                        item_code: frm.doc.production_item\n\t                        \n\t                    }\n\t                })\n\t            }\n\t        });\n\t   // }\n\t   console.log(\"loaded-----\")\n\t    frappe.call({\n\t        method: 'frappe.client.get_list',\n\t        args: {\n\t            doctype: 'Quality Inspection',\n\t            filters: [\n\t                ['reference_type', '=', 'Work Order'],\n\t                ['reference_name', '=', frm.doc.name]\n\t                ]\n\t        },\n\t        callback:function(e){\n\t            console.log(e.message)\n\t            if((e.message.length)==0){\n\t                frm.add_custom_button(__('Quality Inspection'), function(){\n\t                    frappe.new_doc('Quality Inspection',true)\n\t                    frappe.route_options = {\n\t                        reference_doctype: \"Quality Inspection\",\n\t                        reference_type: \"Work Order\",\n\t                        reference_name: frm.doc.name,\n\t                        item_code: frm.doc.production_item\n\t                        \n\t                    }\n\t                })\n\t                \n\t            frm.remove_custom_button('Finish');\n\t        }\n\t        else{\n\t            \n\t        }\n\t        }\n\t        \n\t    })\n\t}\n})",
   "view": "Form"
  },
  {
@@ -30,12 +30,12 @@
   "doctype": "Client Script",
   "dt": "BOM",
   "enabled": 1,
-  "modified": "2022-06-27 15:49:57.388098",
+  "modified": "2022-07-07 12:40:21.970517",
   "name": "BOM-Form",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('BOM', {\n\trefresh(frm) {\n\t\tfrm.set_query(\"item_code\", \"items\", function(doc, cdt, cdn) {\n\t\t\treturn {\n\t\t\t\tfilters: {\n\t\t\t\t\titem_group:\"Raw Material (BOM)\"\n\t\t\t\t}\n\t\t\t};\n\t\t});\n\t\tif(frm.doc.inspection_required==1){\n\t\t    alert('test')\n\t}\n\t},\n\tonload(frm){\n\t    frm.set_query(\"item_code\", \"items\", function(doc, cdt, cdn) {\n\t\t\treturn {\n\t\t\t\tfilters: {\n\t\t\t\t\titem_group:\"Raw Material (BOM)\"\n\t\t\t\t}\n\t\t\t};\n\t\t});\n\t}\n\t\n})\n\nfrappe.ui.form.on('BOM Item', {\n\n})",
+  "script": "frappe.ui.form.on('BOM', {\n\trefresh(frm) {\n\t\tfrm.set_query(\"item_code\", \"items\", function(doc, cdt, cdn) {\n\t\t\treturn {\n\t\t\t\tfilters: {\n\t\t\t\t\titem_group:\"Raw Material (BOM)\"\n\t\t\t\t}\n\t\t\t};\n\t\t});\n\t},\n\tonload(frm){\n\t    frm.set_query(\"item_code\", \"items\", function(doc, cdt, cdn) {\n\t\t\treturn {\n\t\t\t\tfilters: {\n\t\t\t\t\titem_group:\"Raw Material (BOM)\"\n\t\t\t\t}\n\t\t\t};\n\t\t});\n\t}\n\t\n})\n\nfrappe.ui.form.on('BOM Item', {\n\n})",
   "view": "Form"
  },
  {
@@ -43,7 +43,7 @@
   "doctype": "Client Script",
   "dt": "Quality Inspection",
   "enabled": 1,
-  "modified": "2022-07-05 10:22:47.814766",
+  "modified": "2022-07-06 13:18:06.547711",
   "name": "Quality Inspection-Form",
   "parent": null,
   "parentfield": null,

@@ -135,14 +135,9 @@ fixtures = ["Workflow State", "Role",
                      [
                         "Job Card Time Log-shortfall_qty",
                         "Job Card Time Log-accepted_qty",
-                        "BOM-pcbs_per_panel",
-                        "BOM-panel_breadth",
-                        "BOM-panel_length",
                         "BOM Item-column_break_10",
                         "BOM Item-tg",
                         "BOM Item-make",
-                        "BOM Item-copper_thickness",
-                        "BOM Item-dielectric_thickness",
                         "BOM Item-section_break_7",
                         "Work Order-workflow_state",
                         "Job Card Time Log-rejected_qty",
@@ -219,9 +214,9 @@ doc_events = {
    # "Quotation": {
     #    "on_submit": ["pcprocess_customizations.schedulers.send_notification_for_quotation"]
     #},
-    "Work Order": {
-        "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
-    },
+    # "Work Order": {
+    #     "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
+    # },
     #"Lead":{
      #   "validate":["pcprocess_customizations.schedulers.send_notification_for_lead"]
     #},
