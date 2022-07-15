@@ -65,6 +65,8 @@ erpnext.work_order = {
 
 					var finish_btn = frm.add_custom_button(__('Finish'), function() {
 						erpnext.work_order.make_se(frm, 'Manufacture');
+						frm.remove_custom_button('Finish');
+						
 					});
 
 					if(doc.material_transferred_for_manufacturing>=doc.qty) {

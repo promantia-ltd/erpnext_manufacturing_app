@@ -1,3 +1,5 @@
+# from tkinter.filedialog import asksaveasfile
+# from erpnext.erpnext.stock.doctype.quality_inspection.quality_inspection import quality_inspection_query
 import frappe
 import json
 import pandas as pd
@@ -16,6 +18,8 @@ def get_accepted_qty(doc):
         return qty
     else:
         frappe.throw("Accepted Quantity exhausted to create Stock Entry")
+        quantity_tested=doc.final_qty
+        frappe.db.set_value("Quality Inspection",doc.name,'quality_tested',quantity_tested)
 
 class CustomWorkOrder(WorkOrder):
     def validate_work_order_against_so(self):
@@ -43,6 +47,7 @@ class CustomWorkOrder(WorkOrder):
         if total_qty > so_qty + (allowance_percentage/100 * so_qty):
             frappe.throw(_("Cannot produce more Item {0} than Sales Order quantity {1}")
                 .format(self.production_item, so_qty), OverProductionError)
+                
 
 
 @frappe.whitelist()
@@ -82,33 +87,6 @@ def make_stock_entry(work_order_id, purpose, qty=None):
     stock_entry.set_serial_no_batch_for_finished_good()
     return stock_entry.as_dict()
 
-
-
-# def set_naming_series(doc,method):
-#     year,year_start_date = frappe.db.get_value("Fiscal Year",{"disabled":0,"year_start_date":["<=",frappe.utils.getdate()],"year_end_date":[">=",frappe.utils.getdate()]},["year","year_start_date"])
-#     no_of_layers = frappe.db.get_value("PCB Part No Master",{"pcb_part_no":doc.production_item},"no_of_layers")
-#     schedule_date = frappe.db.get_value("Sales Order Item",{'parent':doc.sales_order,'item_code':doc.production_item},"delivery_date")
-#     if no_of_layers!=None:
-#         if int(no_of_layers)>=4:
-#             doc.layer = 'M'
-#         else:
-#             doc.layer = 'D'
-
-#     doc.week_number = schedule_date.strftime("%U")
-#     doc.year = str(year)
-
-# @frappe.whitelist()
-# def set_name(doc):  
-#     doc = json.loads(doc) 
-#     name = doc['name'].strip('WO-')
-#     name = doc['layer']+name
-#     for row in frappe.db.get_list('Work Order Item',{'parenttype':'Work Order','parent':doc['name']},'name'):
-#         frappe.db.set_value('Work Order Item', row.name,{'parent':name})
-#     for row_operation in frappe.db.get_list('Work Order Operation',{'parenttype':'Work Order','parent':doc['name']},'name'):
-#         frappe.db.set_value('Work Order Operation', row_operation.name,{'parent':name})
-#     frappe.db.set_value('Work Order', doc['name'],{ 'name': name,'updated_series':1})
-    
-#     return name
 
 @frappe.whitelist()
 def update_name(doc_name):

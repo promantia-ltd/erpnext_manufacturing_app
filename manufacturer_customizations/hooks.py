@@ -161,17 +161,7 @@ fixtures = ["Workflow State",
                      ]
                 ]
             },
-            # {
-            #     "dt": 'Workspace',
-            #     "filters": [
-            #         ["name", "in",
-            #          [
-            #                  "Selling",
-            #                  "Stock",
-            #          ]
-            #          ]
-            #     ]
-            # },
+            
             ]
 override_doctype_class = {
     "Work Order": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.CustomWorkOrder",
