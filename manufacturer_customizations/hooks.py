@@ -84,7 +84,7 @@ doctype_js = {
 # DocType Class
 # ---------------
 # Override standard doctype classes
-fixtures = ["Workflow State", "Role",
+fixtures = ["Workflow State", 
             {
                 "dt": 'Client Script',
                 "filters": [
@@ -98,24 +98,6 @@ fixtures = ["Workflow State", "Role",
                     ]
                     ]
 
-                ]
-            },
-            {
-                "dt": 'Email Template',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "SI notification for overdue",
-                             "Shelf life in days items notification",
-                             "Docket and Courier Details of DN",
-                             "Lead Auto Intro Email Template",
-                             "Final follow up for Quotation",
-                             "Quotation Follow up – 2",
-                             "Quotation Follow up – 1",
-                             "Purchase Order Follow up Template",
-                             "Purchase Order final due date notification"
-                     ]
-                     ]
                 ]
             },
             {
@@ -135,14 +117,9 @@ fixtures = ["Workflow State", "Role",
                      [
                         "Job Card Time Log-shortfall_qty",
                         "Job Card Time Log-accepted_qty",
-                        "BOM-pcbs_per_panel",
-                        "BOM-panel_breadth",
-                        "BOM-panel_length",
                         "BOM Item-column_break_10",
                         "BOM Item-tg",
                         "BOM Item-make",
-                        "BOM Item-copper_thickness",
-                        "BOM Item-dielectric_thickness",
                         "BOM Item-section_break_7",
                         "Work Order-workflow_state",
                         "Job Card Time Log-rejected_qty",
@@ -160,20 +137,11 @@ fixtures = ["Workflow State", "Role",
                         "Work Order-year",
                         "Work Order-updated_series",
                         "Item-manufacturing_uom",
-                        "Work Order Item-quality_inspection"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Report',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "Shelf Life in Items",
-                             "Lost Report",
-                             "Non Approval Sales Invoices",
-                         "Non Approval Sales Orders",
+                        "Work Order Item-quality_inspection",
+			"Work Order-final_qty",
+			"Work Order-final_accepted_qty",
+			"Quality Inspection-quantity_tested",
+			"Quality Inspection-quantity_passed"
                      ]
                      ]
                 ]
@@ -186,7 +154,6 @@ fixtures = ["Workflow State", "Role",
                          "Job Card Time Log-employee-in_list_view",
                          "Work Order-skip_transfer-default",
                          "Work Order-source_warehouse-default",
-                         "Work Order-naming_series-options",
                          "Work Order-sales_order-reqd",
                          "Work Order-naming_series-default",
 			 "Quality Inspection-reference_type-options"
@@ -194,17 +161,7 @@ fixtures = ["Workflow State", "Role",
                      ]
                 ]
             },
-            {
-                "dt": 'Workspace',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "Selling",
-                             "Stock",
-                     ]
-                     ]
-                ]
-            },
+            
             ]
 override_doctype_class = {
     "Work Order": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.CustomWorkOrder",
@@ -219,9 +176,9 @@ doc_events = {
    # "Quotation": {
     #    "on_submit": ["pcprocess_customizations.schedulers.send_notification_for_quotation"]
     #},
-    "Work Order": {
-        "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
-    },
+    # "Work Order": {
+    #     "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
+    # },
     #"Lead":{
      #   "validate":["pcprocess_customizations.schedulers.send_notification_for_lead"]
     #},
@@ -240,7 +197,7 @@ doc_events = {
 
 # Scheduled Tasks
 # ---------------
-scheduler_events = {
+# scheduler_events = {
    # "cron": {
       #      "00 9 * * *": [
        #         "pcprocess_customizations.schedulers.send_quotation_followup_mails",
@@ -249,15 +206,15 @@ scheduler_events = {
           #  ]
 #        },
 
-    "daily": [
-        "manufacturer_customizations.schedulers.send_notification_for_shelf_life_in_days_items",
-        "manufacturer_customizations.schedulers.send_notification_for_asset_maintenance",
-        "manufacturer_customizations.schedulers.send_docket_and_courier_details_of_DN"
-    ],
-    "weekly": [
-		"manufacturer_customizations.schedulers.send_notification_for_SI",
-    ]
-}
+    # "daily": [
+#         "manufacturer_customizations.schedulers.send_notification_for_shelf_life_in_days_items",
+#         "manufacturer_customizations.schedulers.send_notification_for_asset_maintenance",
+#         "manufacturer_customizations.schedulers.send_docket_and_courier_details_of_DN"
+#     ],
+#     "weekly": [
+# 		"manufacturer_customizations.schedulers.send_notification_for_SI",
+#     ]
+# }
 # scheduler_events = {
 # 	"all": [
 # 		"pcprocess_customizations.tasks.all"

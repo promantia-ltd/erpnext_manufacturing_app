@@ -199,6 +199,7 @@ def update_qty_to_manufacture(work_order,production_item,operation,for_quantity,
                                 previous_operation_acc_qty=time_log.accepted_qty
                                 if float(for_quantity)!=previous_operation_acc_qty:
                                     frappe.db.set_value('Job Card',name,'for_quantity',previous_operation_acc_qty)
+                                    # frappe.db.set_value('Work Order',name,'final_qty',previous_operation_acc_qty)
     return previous_operation_acc_qty
 
 @frappe.whitelist()
@@ -221,8 +222,11 @@ def validate(self, method):
         
         if row.accepted_qty > row.completed_qty:
             frappe.throw("Accepted Quantity cannot be greater than Completed Quantity")
-            
-            qty = doc.quantity_passed
-    # accepted_qty= frappe.db.get_value("quantity_passed","accepted_qty")
-    print(qty, doc.reference_name)
-    frappe.db.set_value("Work Order",{'parent':doc.for_quantity}, 'qty',qty)
+
+    if self.work_order:
+        wo=frappe.get_doc('Work Order',self.work_order)
+        operation_name=wo.operations[-1].operation
+        if self.operation==operation_name:
+            job_card_qty=self.time_logs[0].accepted_qty
+            frappe.db.set_value("Work Order",self.work_order,'final_qty',job_card_qty)
+

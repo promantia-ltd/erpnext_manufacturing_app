@@ -1,3 +1,5 @@
+# from tkinter.filedialog import asksaveasfile
+# from erpnext.erpnext.stock.doctype.quality_inspection.quality_inspection import quality_inspection_query
 import frappe
 import json
 import pandas as pd
@@ -16,6 +18,8 @@ def get_accepted_qty(doc):
         return qty
     else:
         frappe.throw("Accepted Quantity exhausted to create Stock Entry")
+        quantity_tested=doc.final_qty
+        frappe.db.set_value("Quality Inspection",doc.name,'quality_tested',quantity_tested)
 
 class CustomWorkOrder(WorkOrder):
     def validate_work_order_against_so(self):
@@ -43,6 +47,7 @@ class CustomWorkOrder(WorkOrder):
         if total_qty > so_qty + (allowance_percentage/100 * so_qty):
             frappe.throw(_("Cannot produce more Item {0} than Sales Order quantity {1}")
                 .format(self.production_item, so_qty), OverProductionError)
+                
 
 
 @frappe.whitelist()
@@ -81,3 +86,23 @@ def make_stock_entry(work_order_id, purpose, qty=None):
     stock_entry.get_items()
     stock_entry.set_serial_no_batch_for_finished_good()
     return stock_entry.as_dict()
+
+
+@frappe.whitelist()
+def update_name(doc_name):
+    layer = frappe.db.get_value('Work Order',{'name':doc_name},'layer')
+    out = []
+    name = doc_name.strip('WO-')
+    name = layer+name
+    for row in frappe.db.get_list('Work Order Item',{'parenttype':'Work Order','parent':doc_name},'name'):
+        frappe.db.set_value('Work Order Item', row.name,{'parent':name})
+    for row_operation in frappe.db.get_list('Work Order Operation',{'parenttype':'Work Order','parent':doc_name},'name'):
+        frappe.db.set_value('Work Order Operation', row_operation.name,{'parent':name})
+    frappe.db.set_value('Work Order', doc_name,{ 'name': name,'updated_series':1})
+    out.append(name)
+    return out
+
+@frappe.whitelist()
+def update_naming_series_current_value(series,current_value):
+    frappe.db.sql("update `tabSeries` set current = %s where name =%s",(int(current_value), series))
+    return 'Success'
