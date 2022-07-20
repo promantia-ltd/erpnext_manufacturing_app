@@ -242,10 +242,10 @@ doc_events = {
 # ------------------------------
 #     
 
-override_whitelisted_methods = {
-    "erpnext.crm.doctype.lead.lead.make_opportunity":"manufacturer_customizations.manufacturer_customizations.doctype.lead.lead.make_opportunity",
-    "erpnext.manufacturing.doctype.work_order.work_order.make_stock_entry": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.make_stock_entry",
-    }
+#override_whitelisted_methods = {
+    #"erpnext.crm.doctype.lead.lead.make_opportunity":"manufacturer_customizations.manufacturer_customizations.doctype.lead.lead.make_opportunity",
+ #   "erpnext.manufacturing.doctype.work_order.work_order.make_stock_entry": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.make_stock_entry",
+  #  }
 
 
 # each overriding function accepts a `data` argument;
