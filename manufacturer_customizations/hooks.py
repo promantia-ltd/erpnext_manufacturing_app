@@ -138,10 +138,11 @@ fixtures = ["Workflow State",
                         "Work Order-updated_series",
                         "Item-manufacturing_uom",
                         "Work Order Item-quality_inspection",
-			"Work Order-final_qty",
-			"Work Order-final_accepted_qty",
-			"Quality Inspection-quantity_tested",
-			"Quality Inspection-quantity_passed"
+			            "Work Order-final_qty",
+			            "Work Order-final_accepted_qty",
+			            "Quality Inspection-quantity_tested",
+			            "Quality Inspection-quantity_passed",
+                        "Job Card Time Log-actual_production_time_in_mins"
                      ]
                      ]
                 ]
@@ -151,12 +152,12 @@ fixtures = ["Workflow State",
                 "filters": [
                     ["name", "in",
                      [
-                         "Job Card Time Log-employee-in_list_view",
-                         "Work Order-skip_transfer-default",
-                         "Work Order-source_warehouse-default",
-                         "Work Order-sales_order-reqd",
-                         "Work Order-naming_series-default",
-			 "Quality Inspection-reference_type-options"
+                        "Job Card Time Log-employee-in_list_view",
+                        "Work Order-skip_transfer-default",
+                        "Work Order-source_warehouse-default",
+                        "Work Order-sales_order-reqd",
+                        "Work Order-naming_series-default",
+			            "Quality Inspection-reference_type-options"
                      ]
                      ]
                 ]

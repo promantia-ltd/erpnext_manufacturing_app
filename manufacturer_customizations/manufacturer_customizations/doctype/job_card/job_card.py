@@ -230,3 +230,19 @@ def validate(self, method):
             job_card_qty=self.time_logs[0].accepted_qty
             frappe.db.set_value("Work Order",self.work_order,'final_qty',job_card_qty)
 
+@frappe.whitelist()
+def validate(self, method):
+    actual_production_time_in_mins = frappe.db.sql(
+        """select t.time_in_mins, j.bom_no, j.operation, j.posting_date, j.for_quantity from
+        `tabJob Card Time Log` t join `tabJob Card` j
+        on j.name = t.parent
+        where j.operation = %(operation)s and j.bom_no = %(bom_no)s
+        
+        order by j.creation DESC limit 1""",{'operation':self.operation,'bom_no':self.bom_no}
+             ,as_dict= True)
+   
+    if self.time_logs and len(actual_production_time_in_mins)!=0:
+       for log in self.time_logs:
+           log.actual_production_time_in_mins = actual_production_time_in_mins[0].time_in_mins
+    else:
+        actual_production_time_in_mins = 0
