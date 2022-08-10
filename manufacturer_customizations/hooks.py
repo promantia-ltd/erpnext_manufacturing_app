@@ -184,7 +184,8 @@ doc_events = {
      #   "validate":["pcprocess_customizations.schedulers.send_notification_for_lead"]
     #},
     "Job Card": {
-        "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate']
+        "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate'],
+        "before_submit":['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.update_time_in_job_card']
     },
     "Quality Inspection": {
 	"on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.quality_inspection.quality_inspection.on_submit']
