@@ -183,10 +183,13 @@ doc_events = {
     #},
     "Job Card": {
         "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate'],
-        "before_submit":['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.update_time_in_job_card']
+        "on_update":['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.update_time_in_job_card']
     },
     "Quality Inspection": {
 	    "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.quality_inspection.quality_inspection.on_submit']
+    },
+    "Work Order": {
+        "before_insert":["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.update_sales_order_qty"]
     }
     # 	"*": {
     # 		"on_update": "method",
