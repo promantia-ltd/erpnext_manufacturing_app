@@ -44,9 +44,9 @@ class CustomWorkOrder(WorkOrder):
         allowance_percentage = flt(frappe.db.get_single_value("Manufacturing Settings",
             "overproduction_percentage_for_sales_order"))
 
-        # if total_qty > so_qty + (allowance_percentage/100 * so_qty):
-        #     frappe.throw(_("Cannot produce more Item {0} than Sales Order quantity {1}")
-        #         .format(self.production_item, so_qty), OverProductionError)
+        if total_qty > so_qty + (allowance_percentage/100 * so_qty):
+            frappe.throw(_("Cannot produce more Item {0} than Sales Order quantity {1}")
+                .format(self.production_item, so_qty), OverProductionError)
                 
 
 
