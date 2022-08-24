@@ -87,6 +87,9 @@ def make_stock_entry(work_order_id, purpose, qty=None):
     stock_entry.set_serial_no_batch_for_finished_good()
     return stock_entry.as_dict()
 
+def update_sales_order_qty(doc, method):
+    if(doc.sales_order and not doc.sales_order_qty):
+        doc.sales_order_qty=doc.qty
 
 @frappe.whitelist()
 def update_name(doc_name):
