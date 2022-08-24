@@ -242,7 +242,7 @@ def update_time_in_job_card(self, method):
              ,as_dict= True)
         
    
-    if self.time_logs and actual_production_time_in_mins[0].time_in_mins:
+    if self.time_logs and len(actual_production_time_in_mins)!=0:
        for log in self.time_logs:
            log.actual_production_time_in_mins = actual_production_time_in_mins[0].time_in_mins
     else:
