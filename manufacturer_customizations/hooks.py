@@ -84,126 +84,83 @@ doctype_js = {
 # DocType Class
 # ---------------
 # Override standard doctype classes
-fixtures = ["Workflow State", "Client Script", "Role",
-            {
-                "dt": 'Email Template',
+fixtures = ["Workflow State", 
+            {"dt": 'Client Script',
                 "filters": [
-                    ["name", "in",
-                     [
-                             "SI notification for overdue",
-                             "Shelf life in days items notification",
-                             "Docket and Courier Details of DN",
-                             "Lead Auto Intro Email Template",
-                             "Final follow up for Quotation",
-                             "Quotation Follow up – 2",
-                             "Quotation Follow up – 1",
-                             "Purchase Order Follow up Template",
-                             "Purchase Order final due date notification"
-                     ]
+                    [
+                        "name", "in",
+                        [
+                            "Work Order-Form",
+                            "Quality Inspection-Form",
+                            "Job Card-Form",
+                            "BOM-Form"
+                        ]
+                    ]
+
+                ]
+            },
+            {"dt": 'DocType',
+                "filters": [
+                    [
+                        "name", "in",
+                        [
+                            "Spares Item"
+                        ]
+                    ]
+                ]
+            },
+            {"dt": 'Custom Field',
+                "filters": [
+                    [
+                        "name", "in",
+                        [
+                            "Job Card Time Log-shortfall_qty",
+                            "Job Card Time Log-accepted_qty",
+                            "BOM Item-column_break_10",
+                            "BOM Item-tg",
+                            "BOM Item-make",
+                            "BOM Item-section_break_7",
+                            "Work Order-workflow_state",
+                            "Job Card Time Log-rejected_qty",
+                            "Job Card Time Log-excess_qty",
+                            "Job Card Time Log-order_qty",
+                            "Job Card Time Log-launch_qty",
+                            "Sales Order-lead_date_and_time",
+                            "Work Order Item-length",
+                            "Work Order Item-breadth",
+                            "Work Order Item-product",
+                            "Work Order-batch_code",
+                            "BOM-mpc_dpc_no",
+                            "Work Order-layer",
+                            "Work Order-week_number",
+                            "Work Order-year",
+                            "Work Order-updated_series",
+                            "Item-manufacturing_uom",
+                            "Work Order Item-quality_inspection",
+                            "Work Order-final_qty",
+                            "Work Order-final_accepted_qty",
+                            "Quality Inspection-quantity_tested",
+                            "Quality Inspection-quantity_passed",
+                            "Job Card Time Log-actual_production_time_in_mins"
+                        ]
                      ]
                 ]
             },
-            {
-                "dt": "Notification", 
+            {"dt": 'Property Setter',
                 "filters": [
-                    "is_standard != 1"]
-            },
-            {
-                "dt": 'DocType',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "Spares Item"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Workflow',
-                "filters": [
-                    ["name", "in",
-                     [
-                        "Work Order workflow"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Custom Field',
-                "filters": [
-                    ["name", "in",
-                     [
-                        "Job Card Time Log-shortfall_qty",
-                        "Job Card Time Log-accepted_qty",
-                        "BOM-pcbs_per_panel",
-                        "BOM-panel_breadth",
-                        "BOM-panel_length",
-                        "BOM Item-column_break_10",
-                        "BOM Item-tg",
-                        "BOM Item-make",
-                        "BOM Item-copper_thickness",
-                        "BOM Item-dielectric_thickness",
-                        "BOM Item-section_break_7",
-                        "Work Order-workflow_state",
-                        "Job Card Time Log-rejected_qty",
-                        "Job Card Time Log-excess_qty",
-                        "Job Card Time Log-order_qty",
-                        "Job Card Time Log-launch_qty",
-                        "Sales Order-lead_date_and_time",
-                        "Work Order Item-length",
-                        "Work Order Item-breadth",
-                        "Work Order Item-product",
-                        "Work Order-batch_code",
-                        "BOM-mpc_dpc_no",
-                        "Work Order-layer",
-                        "Work Order-week_number",
-                        "Work Order-year",
-                        "Work Order-updated_series",
-                        "Item-manufacturing_uom"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Report',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "Shelf Life in Items",
-                             "Lost Report",
-                             "Non Approval Sales Invoices",
-                         "Non Approval Sales Orders",
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Property Setter',
-                "filters": [
-                    ["name", "in",
-                     [
-                         "Job Card Time Log-employee-in_list_view",
-                         "Work Order-skip_transfer-default",
-                         "Work Order-source_warehouse-default",
-                         "Work Order-naming_series-options",
-                         "Work Order-sales_order-reqd",
-                         "Work Order-naming_series-default",
-			 "Quality Inspection-reference_type-options"
-                     ]
-                     ]
-                ]
-            },
-            {
-                "dt": 'Workspace',
-                "filters": [
-                    ["name", "in",
-                     [
-                             "Selling",
-                             "Stock",
-                     ]
-                     ]
-                ]
-            },
+                            [
+                                "name", "in",
+                            [
+                                "Job Card Time Log-employee-in_list_view",
+                                "Work Order-skip_transfer-default",
+                                "Work Order-source_warehouse-default",
+                                "Work Order-sales_order-reqd",
+                                "Work Order-naming_series-default",
+                                "Quality Inspection-reference_type-options"
+                            ]
+                        ]
+                    ]
+                },
             ]
 override_doctype_class = {
     "Work Order": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.CustomWorkOrder",
@@ -218,17 +175,21 @@ doc_events = {
    # "Quotation": {
     #    "on_submit": ["pcprocess_customizations.schedulers.send_notification_for_quotation"]
     #},
-    "Work Order": {
-        "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
-    },
+    # "Work Order": {
+    #     "before_insert": ["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.set_naming_series"],
+    # },
     #"Lead":{
      #   "validate":["pcprocess_customizations.schedulers.send_notification_for_lead"]
     #},
     "Job Card": {
-        "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate']
+        "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.validate'],
+        "before_insert":['manufacturer_customizations.manufacturer_customizations.doctype.job_card.job_card.update_time_in_job_card']
     },
     "Quality Inspection": {
-	"on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.quality_inspection.quality_inspection.on_submit']
+	    "on_submit": ['manufacturer_customizations.manufacturer_customizations.doctype.quality_inspection.quality_inspection.on_submit']
+    },
+    "Work Order": {
+        "before_insert":["manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.update_sales_order_qty"]
     }
     # 	"*": {
     # 		"on_update": "method",
@@ -239,7 +200,7 @@ doc_events = {
 
 # Scheduled Tasks
 # ---------------
-scheduler_events = {
+# scheduler_events = {
    # "cron": {
       #      "00 9 * * *": [
        #         "pcprocess_customizations.schedulers.send_quotation_followup_mails",
@@ -248,15 +209,15 @@ scheduler_events = {
           #  ]
 #        },
 
-    "daily": [
-        "manufacturer_customizations.schedulers.send_notification_for_shelf_life_in_days_items",
-        "manufacturer_customizations.schedulers.send_notification_for_asset_maintenance",
-        "manufacturer_customizations.schedulers.send_docket_and_courier_details_of_DN"
-    ],
-    "weekly": [
-		"manufacturer_customizations.schedulers.send_notification_for_SI",
-    ]
-}
+    # "daily": [
+#         "manufacturer_customizations.schedulers.send_notification_for_shelf_life_in_days_items",
+#         "manufacturer_customizations.schedulers.send_notification_for_asset_maintenance",
+#         "manufacturer_customizations.schedulers.send_docket_and_courier_details_of_DN"
+#     ],
+#     "weekly": [
+# 		"manufacturer_customizations.schedulers.send_notification_for_SI",
+#     ]
+# }
 # scheduler_events = {
 # 	"all": [
 # 		"pcprocess_customizations.tasks.all"
@@ -284,10 +245,10 @@ scheduler_events = {
 # ------------------------------
 #     
 
-override_whitelisted_methods = {
-    "erpnext.crm.doctype.lead.lead.make_opportunity":"manufacturer_customizations.manufacturer_customizations.doctype.lead.lead.make_opportunity",
-    "erpnext.manufacturing.doctype.work_order.work_order.make_stock_entry": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.make_stock_entry",
-    }
+#override_whitelisted_methods = {
+    #"erpnext.crm.doctype.lead.lead.make_opportunity":"manufacturer_customizations.manufacturer_customizations.doctype.lead.lead.make_opportunity",
+ #   "erpnext.manufacturing.doctype.work_order.work_order.make_stock_entry": "manufacturer_customizations.manufacturer_customizations.doctype.work_order.work_order.make_stock_entry",
+  #  }
 
 
 # each overriding function accepts a `data` argument;
