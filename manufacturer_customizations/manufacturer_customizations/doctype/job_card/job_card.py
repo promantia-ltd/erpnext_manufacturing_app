@@ -192,7 +192,7 @@ def update_qty_to_manufacture(work_order,production_item,operation,for_quantity,
         for idx, oper in enumerate(wo_rec.operations):
             if operation==oper.operation:
                 if idx!=0:
-                    job_card_rec=frappe.get_doc('Job Card',{'work_order':work_order,'operation':wo_rec.operations[idx-1].operation})
+                    job_card_rec=frappe.get_doc('Job Card',{'work_order':work_order,'operation':operation})
                     if job_card_rec.time_logs:
                         for idx, time_log in enumerate(job_card_rec.time_logs):
                             if idx==0:
@@ -200,7 +200,7 @@ def update_qty_to_manufacture(work_order,production_item,operation,for_quantity,
                                 if float(for_quantity)!=previous_operation_acc_qty:
                                     frappe.db.set_value('Job Card',name,'for_quantity',previous_operation_acc_qty)
                                     # frappe.db.set_value('Work Order',name,'final_qty',previous_operation_acc_qty)
-    return previous_operation_acc_qty
+        return previous_operation_acc_qty
 
 @frappe.whitelist()
 def set_completed_qty(name,qty,work_order,production_item):
