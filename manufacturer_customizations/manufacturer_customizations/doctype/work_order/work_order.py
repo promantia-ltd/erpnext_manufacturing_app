@@ -2,8 +2,6 @@
 # from erpnext.erpnext.stock.doctype.quality_inspection.quality_inspection import quality_inspection_query
 import frappe
 import json
-import pandas as pd
-import numpy as np
 import calendar
 from erpnext.manufacturing.doctype.work_order.work_order import *
 from erpnext.manufacturing.doctype.work_order.work_order import WorkOrder
